@@ -23,9 +23,9 @@ input_manual_register_status = {
     "properties": {
         "id": {"type": "string", "minLength": 24, "maxLength": 24},
         "register_date": {"type": "string", "format": "date-time"},
-        "request_provided": {"type": "boolean"}
+        "register_provided": {"type": "boolean"}
     },
-    "required": ["id", "register_date", "request_provided"]
+    "required": ["id", "register_date", "register_provided"]
 }
 
 input_register_status = {
