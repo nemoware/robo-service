@@ -65,3 +65,12 @@ input_recognition = {
     },
     "required": ["id", "all_data_recognized", "lack_of_data", "new_deadline", "audit_start", "directory_path"]
 }
+
+input_reanalysis = {
+    "type": "object",
+    "properties": {
+        "id": {"type": "string", "minLength": 24, "maxLength": 24},
+        "directory_path": {"type": "string"}
+    },
+    "required": ["id", "directory_path"]
+}

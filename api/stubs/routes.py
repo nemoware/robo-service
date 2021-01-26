@@ -83,3 +83,9 @@ def active_tasks():
         "message": "ok"
     }
     return response_json
+
+
+@api.route('/robot/reanalysis', methods=['POST'])
+@validate_schema(schemas.input_reanalysis)
+def reanalysis():
+    return jsonify(dict(message='ok'))
