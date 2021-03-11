@@ -5,7 +5,7 @@ import os
 import requests
 from bson import ObjectId
 
-from common import get_mongodb_connection, env_var, logger, update_status
+from api.common import get_mongodb_connection, env_var, logger, update_status
 
 pool = None
 

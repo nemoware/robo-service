@@ -4,7 +4,7 @@ from multiprocessing.pool import Pool
 
 import flask
 
-import doc_loader
+from api import doc_loader
 from api.prod.routes import api as prod_api
 from api.stubs.routes import api as stub_api
 

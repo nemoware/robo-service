@@ -4,14 +4,12 @@ import logging
 import os
 
 import bson
-from bson import ObjectId
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import abort
 
-import doc_loader
-import schemas
-from common import validate_schema, get_mongodb_connection, env_var, update_status
-from doc_loader import load_docs
+from api import doc_loader, schemas
+from api.common import validate_schema, get_mongodb_connection, env_var, update_status
+from api.doc_loader import load_docs
 
 api = Blueprint('prod', __name__)
 logger = logging.getLogger(__name__)
