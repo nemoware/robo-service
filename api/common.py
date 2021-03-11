@@ -71,7 +71,9 @@ def update_status(id, status: str = 'Collecting', valid_statuses=None, http=True
             logger.error('Task not found')
     if audit['status'] in valid_statuses:
         if http:
-            update = {'$set': {'status': status}, '$push': {'robot': request.json}}
+            json_data = request.json
+            json_data['request_path'] = request.path
+            update = {'$set': {'status': status}, '$push': {'robot': json_data}}
         else:
             update = {'$set': {'status': status}}
         audits.update_one({'_id': audit['_id']}, update)
