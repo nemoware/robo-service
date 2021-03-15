@@ -102,8 +102,7 @@ def recognition():
             root = request.json['directory_path']
         else:
             root = os.path.join(env_var('GPN_DOC_ROOT'), request.json['directory_path'])
-        result = doc_loader.pool.apply_async(load_docs, (request.json['id'], root))
-        result.get()
+        doc_loader.pool.apply_async(load_docs, (request.json['id'], root))
     else:
         resp = update_status(request.json['id'])
     return jsonify(dict(message=resp))
