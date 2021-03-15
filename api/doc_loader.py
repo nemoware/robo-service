@@ -39,6 +39,7 @@ def load_docs(audit_id, root: str):
                 paths.append(os.path.join(directory, file))
         parser_url = env_var('GPN_PARSER_URL') + '/document-parser'
         headers = {'Content-Type': 'application/json'}
+        parsed_docs = 0
         for path in paths:
             with open(path, "rb") as doc_file:
                 encoded_string = base64.b64encode(doc_file.read()).decode('ascii')
@@ -49,13 +50,18 @@ def load_docs(audit_id, root: str):
             response_json = response.json()
             contract_id = None
             for document in response_json['documents']:
+                if response.status_code == 200:
+                    parsed_docs += 1
                 if document['documentType'] == 'ANNEX':
                     save_doc(audit_id, document, relative_path, response.status_code, response_json['version'], contract_id)
                 else:
                     inserted_id = save_doc(audit_id, document, relative_path, response.status_code, response_json['version'])
                     if document['documentType'] == 'CONTRACT':
                         contract_id = inserted_id
-        update_status(audit_id, 'InWork', ['Loading'], http=False)
+        audits = get_mongodb_connection()['audits']
+        update = {'$set': {'status': 'InWork', 'checkedDocumentCount': parsed_docs}}
+        audits.update_one({'_id': ObjectId(audit_id)}, update)
+
     except Exception as e:
         logger.exception(e)
         update_status(audit_id, 'LoadingFailed', ['Loading'], http=False)
